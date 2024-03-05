@@ -13,6 +13,7 @@ use App\Models\WithdrawlRequest;
 use App\Models\ReferralAmount;
 use App\Helpers\Helper;
 use App\Models\BinaryBenefit;
+use App\Models\BinaryRewards;
 use App\Models\Order;
 use App\Models\UserPackage;
 use App\Models\DailyPackageBenefit;
@@ -24,6 +25,8 @@ use Illuminate\Support\Facades\Artisan;
 use Session;
 use Illuminate\Support\Facades\Auth;
 use PHPUnit\TextUI\Help;
+use Illuminate\Support\Facades\DB;
+use App\Models\Level;
 
 class HomeController extends Controller
 {
@@ -62,10 +65,14 @@ class HomeController extends Controller
         ->get();
 
         // daily benefits
-        Artisan::call('command:calculateBinaryIncentive',['user_id'=>$user->id]);
+        // Artisan::call('command:calculateBinaryIncentive',['user_id'=>$user->id]);
         $dailyBenefits = DailyPackageBenefit::where('user_id', \Auth::user()->id)->with('package', 'user')->orderBy('created_at', 'DESC')->get();
         $binarys = BinaryBenefit::where('user_id', \Auth::user()->id)->get();
-        return view('user.index',compact('wallet','user','directs','directs_wallet','reward','orders','user_order','rankmanagement','downline','team_order','withdrawl_request','packages', 'dailyBenefits','binarys'));
+        $levels=Level::get();
+        $unmatched=BinaryRewards::where('user_id', \Auth::user()->id)->where('status', 'UnPaid')->get();
+        return view('user.index',compact('wallet','user','directs','directs_wallet','reward','orders',
+                                        'user_order','rankmanagement','downline','team_order','withdrawl_request',
+                                        'packages', 'dailyBenefits','binarys','levels','unmatched'));
     }
 
 
@@ -85,6 +92,7 @@ class HomeController extends Controller
             'password_confirmation' => 'required',
             'agree' => 'required',
         ]);
+
         $pin = PinList::where('pin_number',$request->pin_number)->first();
         if(!$pin){
             return back()->with('flash_error', "Invalid PIN.");
@@ -95,15 +103,17 @@ class HomeController extends Controller
         if($pin->used_status=='Pending'){
             return back()->with('flash_error', "This PIN is not approved by admin.");
         }
-
         $check_sponser = User::where('member_id',$pin->member_id)->first();
         // dd($check_sponser);
         if ($check_sponser) {
             try{
+                DB::beginTransaction();
                 $user_count = (User::count()+1);
                 $member_id = 'LIFE' . sprintf('%06d', $user_count);
-
+                // dd($pin);
                 $rank = RankManagement::orderBy('id','asc')->first();
+                $empty_node=Helper::emptyNode($pin->member_id,$pin->side);
+                // dd($empty_node);
                 $user = new User;
                 $user->name = $request->name;
                 $user->rank_id = $rank->id;
@@ -111,7 +121,8 @@ class HomeController extends Controller
                 $user->mobile = $request->mobile;
                 $user->sponser_id = $pin->member_id;
                 $user->member_id = $member_id;
-                $user->placement_id = $pin->member_id;
+                $user->placement_id = $empty_node;
+                $user->side = $pin->side;
                 $user->password = Hash::make($request->password);
                 $user->password_hint = ($request->password);
                 $user->status='Active';
@@ -120,17 +131,19 @@ class HomeController extends Controller
                 $existingNodes = new Tree;
                 $existingNodes->user_id = $user->id;
                 $existingNodes->save();
-                $this->user_setting_to_left_right($check_sponser->id,$user);
+                // $this->user_setting_to_left_right($check_sponser->id,$user);
                 // dd('test');
+                DB::commit();
                 return back()->with('flash_success', "Registration Completed Successfully.");
+
             }
             catch(Exception $e){
+                DB::rollback();
                 dd($e);
             }
         }else{
             return back()->with('flash_error', "Invalid Sponsor Id.");
         }
-
     }
 
     function user_setting_to_left_right($sponser_id,$user){
@@ -144,11 +157,15 @@ class HomeController extends Controller
             if($existingNodes->right_user_id==null){
                 $existingNodes->right_user_id = $user->id;
                 $existingNodes->save();
+                $user->placement_id=$existingNodes->user->member_id;
+                $user->save();
                 return true;
             }
             if($existingNodes->left_user_id==null){
                 $existingNodes->left_user_id = $user->id;
                 $existingNodes->save();
+                $user->placement_id=$existingNodes->user->member_id;
+                $user->save();
                 return true;
             }
         }
@@ -183,7 +200,13 @@ class HomeController extends Controller
         $userPackage->payment_request_id = $txnid;
         $userPackage->payment_id = $txnid;
         $userPackage->save();
-        Helper::calculateRewards($user->id,$user->member_id,$package->package_id);
+        $direct_refferal_reward= $package->package_amount *(10/100);
+
+        Helper::generateBinaryIncome($user->placement_id, $user->side, $user->id, $level=1, $package->package_amount);
+
+
+        // Helper::addRefferalIncome($user->id, $direct_refferal_reward);
+        // Helper::addLevelIncome($user->id, $package->package_amount);
     }
 
         public static function addToWallet($user_id,$amount){

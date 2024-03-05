@@ -46,6 +46,17 @@ class ProfileController extends Controller
         $pin->save();
         return back()->with('flash_success',$request->count.' PIN is Generated');
     }
+    public function pinSideChange(Request $request){
+        // dd($request->all());
+        $pin=PinList::find($request->pin_id);
+        if($pin){
+            if(empty($pin->user)){
+                $pin->side=$request->status;
+                $pin->save();
+                return response()->json(['success' => 'Status changed successfully.']);
+            }
+        }
+    }
 
     public function profileupdate(Request $request)
     {

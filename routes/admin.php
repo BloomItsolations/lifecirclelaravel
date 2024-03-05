@@ -197,114 +197,113 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/update-complaint', [AdminComplaintController::class, 'updatecomplaint'])->name('update-complaint');
         Route::post('/complaints/update', [AdminComplaintController::class, 'update'])->name('complaints');
 
-// Subcategory
-Route::get('/sub-category', [SubCategoryController::class, 'index'])->name('subcategory');
-Route::get('/add-sub-category', [SubCategoryController::class, 'add'])->name('add-subcategory');
-Route::post('/add-sub-category', [SubCategoryController::class, 'create']);
-Route::get('/edit-sub-category/{id}', [SubCategoryController::class, 'edit'])->name('edit-subcategory');
-Route::post('/edit-sub-category/{id}', [SubCategoryController::class, 'update']);
-Route::get('/delete-sub-category{id}', [SubCategoryController::class, 'delete'])->name('delete-subcategory');
-/*Ajax */
-Route::post('/get-subcategory-bycategory', [AjaxController::class, 'subCategory'])->name('get-sub-category');
-Route::post('/get-childcategory-bysubcategory', [AjaxController::class, 'childCategory'])->name('get-child-category');
-Route::post('/get-size', [AjaxController::class, 'size'])->name('get-size');
-//child category
-Route::get('/child-category', [ChildCategoryController::class, 'index'])->name('child-category');
-Route::get('/add-child-category', [ChildCategoryController::class, 'add'])->name('add-child-category');
-Route::post('/add-child-category', [ChildCategoryController::class, 'create']);
-Route::get('/edit-child-category/{id}', [ChildCategoryController::class, 'edit'])->name('edit-child-category');
-Route::post('/edit-child-category/{id}', [ChildCategoryController::class, 'update']);
-Route::get('/delete-child-category/{id}', [ChildCategoryController::class, 'destroy'])->name('delete-child-category');
+        // Subcategory
+        Route::get('/sub-category', [SubCategoryController::class, 'index'])->name('subcategory');
+        Route::get('/add-sub-category', [SubCategoryController::class, 'add'])->name('add-subcategory');
+        Route::post('/add-sub-category', [SubCategoryController::class, 'create']);
+        Route::get('/edit-sub-category/{id}', [SubCategoryController::class, 'edit'])->name('edit-subcategory');
+        Route::post('/edit-sub-category/{id}', [SubCategoryController::class, 'update']);
+        Route::get('/delete-sub-category{id}', [SubCategoryController::class, 'delete'])->name('delete-subcategory');
+        /*Ajax */
+        Route::post('/get-subcategory-bycategory', [AjaxController::class, 'subCategory'])->name('get-sub-category');
+        Route::post('/get-childcategory-bysubcategory', [AjaxController::class, 'childCategory'])->name('get-child-category');
+        Route::post('/get-size', [AjaxController::class, 'size'])->name('get-size');
+        //child category
+        Route::get('/child-category', [ChildCategoryController::class, 'index'])->name('child-category');
+        Route::get('/add-child-category', [ChildCategoryController::class, 'add'])->name('add-child-category');
+        Route::post('/add-child-category', [ChildCategoryController::class, 'create']);
+        Route::get('/edit-child-category/{id}', [ChildCategoryController::class, 'edit'])->name('edit-child-category');
+        Route::post('/edit-child-category/{id}', [ChildCategoryController::class, 'update']);
+        Route::get('/delete-child-category/{id}', [ChildCategoryController::class, 'destroy'])->name('delete-child-category');
 
 
-//color
-Route::get('/color', [ColorController::class, 'index'])->name('colors');
-Route::get('/add-color', [ColorController::class, 'create'])->name('add-color');
-Route::post('/add-color', [ColorController::class, 'store']);
-Route::get('/edit-color/{slug}', [ColorController::class, 'edit'])->name('edit-color');
-Route::post('/edit-color/{slug}', [ColorController::class, 'update']);
-Route::get('/delete-color/{slug}', [ColorController::class, 'destroy'])->name('delete-color');
+        //color
+        Route::get('/color', [ColorController::class, 'index'])->name('colors');
+        Route::get('/add-color', [ColorController::class, 'create'])->name('add-color');
+        Route::post('/add-color', [ColorController::class, 'store']);
+        Route::get('/edit-color/{slug}', [ColorController::class, 'edit'])->name('edit-color');
+        Route::post('/edit-color/{slug}', [ColorController::class, 'update']);
+        Route::get('/delete-color/{slug}', [ColorController::class, 'destroy'])->name('delete-color');
 
-//size
-Route::get('/size', [SizeController::class, 'index'])->name('sizes');
-Route::get('/add-size', [SizeController::class, 'create'])->name('add-size');
-Route::post('/add-size', [SizeController::class, 'store']);
-Route::get('/edit-size/{slug}', [SizeController::class, 'edit'])->name('edit-size');
-Route::post('/edit-size/{slug}', [SizeController::class, 'update']);
-Route::get('/delete-size/{slug}', [SizeController::class, 'destroy'])->name('delete-size');
-//product
-Route::get('/product', [ProductController::class, 'index'])->name('products');
-Route::get('/add-product', [ProductController::class, 'add'])->name('add-product');
-Route::post('/add-product', [ProductController::class, 'create']);
-Route::get('/edit-product/{slug}', [ProductController::class, 'edit'])->name('edit-product');
-Route::post('/edit-product/{slug}', [ProductController::class, 'update']);
-Route::get('/delete-product/{id}', [ProductController::class, 'delete'])->name('delete-product');
+        //size
+        Route::get('/size', [SizeController::class, 'index'])->name('sizes');
+        Route::get('/add-size', [SizeController::class, 'create'])->name('add-size');
+        Route::post('/add-size', [SizeController::class, 'store']);
+        Route::get('/edit-size/{slug}', [SizeController::class, 'edit'])->name('edit-size');
+        Route::post('/edit-size/{slug}', [SizeController::class, 'update']);
+        Route::get('/delete-size/{slug}', [SizeController::class, 'destroy'])->name('delete-size');
+        //product
+        Route::get('/product', [ProductController::class, 'index'])->name('products');
+        Route::get('/add-product', [ProductController::class, 'add'])->name('add-product');
+        Route::post('/add-product', [ProductController::class, 'create']);
+        Route::get('/edit-product/{slug}', [ProductController::class, 'edit'])->name('edit-product');
+        Route::post('/edit-product/{slug}', [ProductController::class, 'update']);
+        Route::get('/delete-product/{id}', [ProductController::class, 'delete'])->name('delete-product');
 
-// Kyc
-Route::get('/kyc', [AdminKycController::class, 'index'])->name('kyc');
-Route::get('/kyc/{id}', [AdminKycController::class, 'view'])->name('admin-kyc-view');
-Route::post('/kyc', [AdminKycController::class, 'update']);
-//packages
-Route::get('/package', [AdminPackageController::class, 'index'])->name('package');
-Route::post('/package', [AdminPackageController::class, 'add']);
-Route::get('/edit-package/{slug}', [AdminPackageController::class, 'edit'])->name('admin-edit-package');
-Route::post('/edit-package/{slug}', [AdminPackageController::class, 'update']);
-Route::get('/delete-package/{id}', [AdminPackageController::class, 'delete'])->name('admin-delete-package');
-Route::get('/purchase-package-admin', [AdminPackageController::class, 'purchasePackage']);
-//banner
-Route::get('/banner', [BannerController::class, 'index'])->name('banner');
-Route::get('/add-banner', [BannerController::class, 'add'])->name('add-banner');
-Route::post('/add-banner', [BannerController::class, 'create']);
-Route::get('/edit-banner/{id}', [BannerController::class, 'edit'])->name('admin-edit-banner');
-Route::post('/edit-banner/{id}', [BannerController::class, 'update']);
-Route::get('/delete-banner/{id}', [BannerController::class, 'delete'])->name('admin-delete-banner');
+        // Kyc
+        Route::get('/kyc', [AdminKycController::class, 'index'])->name('kyc');
+        Route::get('/kyc/{id}', [AdminKycController::class, 'view'])->name('admin-kyc-view');
+        Route::post('/kyc', [AdminKycController::class, 'update']);
+        //packages
+        Route::get('/package', [AdminPackageController::class, 'index'])->name('package');
+        Route::post('/package', [AdminPackageController::class, 'add']);
+        Route::get('/edit-package/{slug}', [AdminPackageController::class, 'edit'])->name('admin-edit-package');
+        Route::post('/edit-package/{slug}', [AdminPackageController::class, 'update']);
+        Route::get('/delete-package/{id}', [AdminPackageController::class, 'delete'])->name('admin-delete-package');
+        Route::get('/purchase-package-admin', [AdminPackageController::class, 'purchasePackage']);
+        //banner
+        Route::get('/banner', [BannerController::class, 'index'])->name('banner');
+        Route::get('/add-banner', [BannerController::class, 'add'])->name('add-banner');
+        Route::post('/add-banner', [BannerController::class, 'create']);
+        Route::get('/edit-banner/{id}', [BannerController::class, 'edit'])->name('admin-edit-banner');
+        Route::post('/edit-banner/{id}', [BannerController::class, 'update']);
+        Route::get('/delete-banner/{id}', [BannerController::class, 'delete'])->name('admin-delete-banner');
 
-Route::get('terms/index', [TermsController::class, 'index'])->name('terms-index');
-Route::get('terms/create', [TermsController::class, 'create'])->name('terms-create');
-Route::post('terms/create', [TermsController::class, 'store'])->name('terms-store');
-Route::get('terms/edit{id}', [TermsController::class, 'edit'])->name('terms-edit');
-Route::post('terms/update{id}', [TermsController::class, 'update'])->name('terms-update');
-Route::post('terms/destroy/{id}', [TermsController::class, 'delete'])->name('terms-destroy');
-//Privacy
-Route::get('privacy/index', [PrivacyController::class, 'index'])->name('privacy-index');
-Route::get('privacy/create', [PrivacyController::class, 'create'])->name('privacy-create');
-Route::post('privacy/create', [PrivacyController::class, 'store'])->name('privacy-store');
-Route::get('privacy/edit{id}', [PrivacyController::class, 'edit'])->name('privacy-edit');
-Route::post('privacy/update{id}', [PrivacyController::class, 'update'])->name('privacy-update');
-Route::post('privacy/destroy/{id}', [PrivacyController::class, 'delete'])->name('privacy-destroy');
+        Route::get('terms/index', [TermsController::class, 'index'])->name('terms-index');
+        Route::get('terms/create', [TermsController::class, 'create'])->name('terms-create');
+        Route::post('terms/create', [TermsController::class, 'store'])->name('terms-store');
+        Route::get('terms/edit{id}', [TermsController::class, 'edit'])->name('terms-edit');
+        Route::post('terms/update{id}', [TermsController::class, 'update'])->name('terms-update');
+        Route::post('terms/destroy/{id}', [TermsController::class, 'delete'])->name('terms-destroy');
+        //Privacy
+        Route::get('privacy/index', [PrivacyController::class, 'index'])->name('privacy-index');
+        Route::get('privacy/create', [PrivacyController::class, 'create'])->name('privacy-create');
+        Route::post('privacy/create', [PrivacyController::class, 'store'])->name('privacy-store');
+        Route::get('privacy/edit{id}', [PrivacyController::class, 'edit'])->name('privacy-edit');
+        Route::post('privacy/update{id}', [PrivacyController::class, 'update'])->name('privacy-update');
+        Route::post('privacy/destroy/{id}', [PrivacyController::class, 'delete'])->name('privacy-destroy');
 
-//GrievanceRedressals
-Route::get('grievanceredressals/index', [GrievanceRedressalsController::class, 'index'])->name('grievance-redressals-index');
-Route::get('grievanceredressals/create', [GrievanceRedressalsController::class, 'create'])->name('grievance-redressals-create');
-Route::post('grievanceredressals/create', [GrievanceRedressalsController::class, 'store'])->name('grievance-redressals-store');
-Route::get('grievanceredressals/edit{id}', [GrievanceRedressalsController::class, 'edit'])->name('grievance-redressals-edit');
-Route::post('grievanceredressals/update{id}', [GrievanceRedressalsController::class, 'update'])->name('grievance-redressals-update');
-Route::post('grievanceredressals/destroy/{id}', [GrievanceRedressalsController::class, 'delete'])->name('grievance-redressals-destroy');
+        //GrievanceRedressals
+        Route::get('grievanceredressals/index', [GrievanceRedressalsController::class, 'index'])->name('grievance-redressals-index');
+        Route::get('grievanceredressals/create', [GrievanceRedressalsController::class, 'create'])->name('grievance-redressals-create');
+        Route::post('grievanceredressals/create', [GrievanceRedressalsController::class, 'store'])->name('grievance-redressals-store');
+        Route::get('grievanceredressals/edit{id}', [GrievanceRedressalsController::class, 'edit'])->name('grievance-redressals-edit');
+        Route::post('grievanceredressals/update{id}', [GrievanceRedressalsController::class, 'update'])->name('grievance-redressals-update');
+        Route::post('grievanceredressals/destroy/{id}', [GrievanceRedressalsController::class, 'delete'])->name('grievance-redressals-destroy');
 
-//Refund/Cancelled Policy
-Route::get('refund/index', [RefundController::class, 'index'])->name('refund-index');
-Route::get('refund/create', [RefundController::class, 'create'])->name('refund-create');
-Route::post('refund/create', [RefundController::class, 'store'])->name('refund-store');
-Route::get('refund/edit{id}', [RefundController::class, 'edit'])->name('refund-edit');
-Route::post('refund/update{id}', [RefundController::class, 'update'])->name('refund-update');
-Route::post('refund/destroy/{id}', [RefundController::class, 'delete'])->name('refund-destroy');
-//complaints
+        //Refund/Cancelled Policy
+        Route::get('refund/index', [RefundController::class, 'index'])->name('refund-index');
+        Route::get('refund/create', [RefundController::class, 'create'])->name('refund-create');
+        Route::post('refund/create', [RefundController::class, 'store'])->name('refund-store');
+        Route::get('refund/edit{id}', [RefundController::class, 'edit'])->name('refund-edit');
+        Route::post('refund/update{id}', [RefundController::class, 'update'])->name('refund-update');
+        Route::post('refund/destroy/{id}', [RefundController::class, 'delete'])->name('refund-destroy');
+        //complaints
 
 
-Route::get('/view-control-users', [NewAdminController::class, 'index'])->name('admin-view-control-users');
-Route::get('/add-control-users', [NewAdminController::class, 'create'])->name('admin-add-control-users');
-Route::post('/add-control-users', [NewAdminController::class, 'store']);
-Route::get('/edit-control-users/{id}', [NewAdminController::class, 'edit'])->name('admin-edit-control-users');
-Route::post('/edit-control-users/{id}', [NewAdminController::class, 'update']);
-Route::get('/delete-control-users/{id}', [NewAdminController::class, 'destroy'])->name('admin-delete-control-users');
+        Route::get('/view-control-users', [NewAdminController::class, 'index'])->name('admin-view-control-users');
+        Route::get('/add-control-users', [NewAdminController::class, 'create'])->name('admin-add-control-users');
+        Route::post('/add-control-users', [NewAdminController::class, 'store']);
+        Route::get('/edit-control-users/{id}', [NewAdminController::class, 'edit'])->name('admin-edit-control-users');
+        Route::post('/edit-control-users/{id}', [NewAdminController::class, 'update']);
+        Route::get('/delete-control-users/{id}', [NewAdminController::class, 'destroy'])->name('admin-delete-control-users');
 
-// Pin Generation
-Route::get('/pin-list', [PinController::class, 'index'])->name('pin-list');
-Route::get('/pin-approved/{id}', [PinController::class, 'pinApproved']);
+        // Pin Generation
+        Route::get('/pin-list', [PinController::class, 'index'])->name('pin-list');
+        Route::get('/pin-approved/{id}', [PinController::class, 'pinApproved']);
 
         // Id card
         Route::get('/id-card', [AdminIdcardController::class, 'index'])->name('idcard');
         Route::get('/id-card-view/{id}', [AdminIdcardController::class, 'view'])->name('admin-idcard-view');
     });
-
 });

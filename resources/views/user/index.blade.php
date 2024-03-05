@@ -147,6 +147,54 @@
                 <div class="col-xl-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
+                            <h4 class="card-title"> Binary UnMatched Benefits </h4>
+                        </div>
+                        <div class="card-body">
+                        <div class="table-responsive">
+										@if(count($unmatched))
+										<table class="table table-bordered  mb-0 text-nowrap">
+											<thead>
+												<tr>
+													<th> Sl.No </th>
+													<th> User ID </th>
+													<th> User Name </th>
+													<th> Placement Side </th>
+													<th> Level </th>
+													<th> Binary Amount</th>
+													<th> Date </th>
+
+												</tr>
+											</thead>
+
+											<tbody>
+												@foreach ($unmatched as $key=> $um)
+												<tr class="TR-bgcolor" class="TR-bgcolor1" >
+													<td> {{++$key}}</td>
+													<td> {{($um->user_details)?$um->user_details->member_id:''}}</td>
+													<td> {{($um->user_details)?$um->user_details->name:''}}</td>
+													<td> {{$um->side}}</td>
+													<td> {{$um->level}} </td>
+													<td> {{$um->amount}}</td>
+													<td> {{date('d-m-Y',strtotime($um->created_at))}} </td>
+												</tr>
+												@endforeach
+											</tbody>
+										</table>
+										@else
+										<div> No Records Found
+										</div>
+											@endif
+									</div>
+
+                            <button type="submit" class="btn btn-primary btn-sm pull-right"> View All Rewards
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
                             <h4 class="card-title"> Binary Benefits </h4>
                         </div>
                         <div class="card-body">
@@ -351,8 +399,8 @@
                                 <th>Trips</th>
                                 <th>Expedition</th>
                                 <th>Packages</th>
-                                <th>Duration</th>
-                                <th>Amount</th>
+                                {{-- <th>Duration</th> --}}
+                                {{-- <th>Amount</th> --}}
                                 <th>Payment Mode</th>
                                 <th>Purchase Date</th>
                                 </tr>
@@ -364,8 +412,9 @@
                                 <td>{{$package_details->name}}</td>
                                 <td>{{$package_details->expedition}}</td>
                                 <td>{{$package_details->amount}}</td>
-                                <td>{{$package_details->duration}} X 369</td>
-                                <td>{{$package_details->packages}}</td>                                <td>{{$package->payment_type}}</td>
+                                {{-- <td>{{$package_details->duration}} X 369</td> --}}
+                                {{-- <td>{{$package_details->packages}}</td> --}}
+                                <td>{{$package->payment_type}}</td>
                                 <td>{{date('d-m-Y',strtotime($package->created_at))}} @if($index==0)<span class="text-danger">Active</span>@endif</td>
                                 </tr>
                             @endforeach
@@ -398,11 +447,11 @@
 													</tr>
 												</thead>
 												<tbody>
-													@foreach ($rankmanagement as $key=> $rank)
+													@foreach ($levels as $key=> $level)
 													<tr>
 														<td> {{++$key}} </td>
-														<td> {{$rank->name}} </td>
-														<td> {{$rank->royalty_percentage}}%</td>
+														<td> Level {{$level->name}} </td>
+														<td> {{$level->percentage}}%</td>
 													</tr>
 													@endforeach
 												</tbody>

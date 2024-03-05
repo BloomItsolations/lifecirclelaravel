@@ -1,19 +1,23 @@
-@if($user)
-    @php $trees = \App\Models\Tree::where('user_id',$user->id)->get();   @endphp
-@else
-    @php $trees = \App\Models\Tree::where('user_id',0)->get();   @endphp
+@if(!empty($child_child_user))
+    <?php
+        $child_child_user_left = App\Models\User::where('placement_id', $child_child_user->member_id)
+                ->where('side', 'left')
+                ->first();
+        $child_child_user_right = App\Models\User::where('placement_id', $child_child_user->member_id)
+            ->where('side', 'right')
+            ->first();
+    ?>
 @endif
-@if($trees->count()>0)
-@foreach($trees as $tree)
+@if(!empty($child_child_user))
 <div class="row td_style">
 
-    @php $user = $tree->left_user;   @endphp
     <div class="col-md-6">
         <img class="profile-user-img img-fluid img-circle" src="{{ asset('backend/assets/img/avatar5.png') }}">
-        @if($user)
-        <a href="{{url('user/genealogy')}}?member_id={{$user->member_id}}">
-        <p>{{ ucfirst($user->name) }}<br>
-            {{ $user->member_id }}
+        @if($child_child_user_left)
+
+        <a href="{{url('user/genealogy')}}?member_id={{$child_child_user_left->member_id}}">
+        <p>{{ ucfirst($child_child_user_left->name) }}<br>
+            {{ $child_child_user_left->member_id }}
         </p>
         </a>
         @else
@@ -24,13 +28,12 @@
 
     </div>
 
-    @php $user = $tree->right_user;   @endphp
     <div class="col-md-6">
         <img class="profile-user-img img-fluid img-circle" src="{{ asset('backend/assets/img/avatar5.png') }}">
-        @if($user)
-        <a href="{{url('user/genealogy')}}?member_id={{$user->member_id}}">
-        <p>{{ ucfirst($user->name) }}<br>
-            {{ $user->member_id }}
+        @if($child_child_user_right)
+        <a href="{{url('user/genealogy')}}?member_id={{$child_child_user_right->member_id}}">
+        <p>{{ ucfirst($child_child_user_right->name) }}<br>
+            {{ $child_child_user_right->member_id }}
         </p>
         </a>
         @else
@@ -42,7 +45,6 @@
 
     </div>
 </div>
-@endforeach
 @else
 <div class="row td_style">
 

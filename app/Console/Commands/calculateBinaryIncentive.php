@@ -44,12 +44,14 @@ class calculateBinaryIncentive extends Command
      */
     public function handle()
     {
+        return false;
         $user_id = $this->argument('user_id');
         if($user_id=='ALL'){
             $users_loop = User::all();
         }else{
             $users_loop = User::where('id',$user_id)->get();
         }
+        // dd($users_loop);
         foreach($users_loop as $users_loop_row){
             $user_id = $users_loop_row->id;
             $tree_check = Tree::where('user_id',$user_id)->first();
@@ -66,11 +68,13 @@ class calculateBinaryIncentive extends Command
                     $this->calculate_pairing($user_id,$right_user_id,$left_user_id);
                 }
                 else if($level==2){
+                    // dd($right_user_id,$left_user_id);
                     $users = Tree::whereIn('user_id',[$right_user_id,$left_user_id])->get();
                     foreach($users as $user){
                         $right_users[] = $user->right_user_id;
                         $left_users[] = $user->left_user_id;
                     }
+                    // dd($right_users,$left_users);
                     $right_users = array_filter($right_users);
                     $left_users = array_filter($left_users);
                     if(count($right_users)==2 && count($left_users)==2){

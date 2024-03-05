@@ -26,7 +26,7 @@
                         <h4> E-Wallet </h4> </div>
                         <div class="card-body">
                             <div class="card-header">
-                            <h3> E-Wallet Balance	Rs : <span> {{@$wallet->amount}} </span></h3>
+                            <h3> E-Wallet Balance	Rs : <span> {{($wallet)? $wallet->amount:0}} </span></h3>
                             </div>
 
 

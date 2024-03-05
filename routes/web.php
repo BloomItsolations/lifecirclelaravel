@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\jobs\MatchingController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\WelcomeController;
@@ -119,6 +120,9 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('/profile', [ProfileController::class, 'userprofile'])->name('profile');
         Route::get('/pin-generation', [ProfileController::class, 'pinGeneration'])->name('pin-generation');
         Route::post('/pin-generation', [ProfileController::class, 'pinGenerationSave']);
+
+        Route::get('/pin-side-change', [ProfileController::class, 'pinSideChange'])->name('pin-side-change');
+
         Route::post('user/changepassword',[ProfileController::class,'updatePassword'])->name('update-password');
           // User Profile
           Route::get('/user-profile', [ProfileController::class, 'userprofile'])->name('user-profile');
@@ -231,3 +235,7 @@ Route::get('/storage-link', function () {
 });
 
 Route::get('/package-list',[PackageController::class,'index']);
+
+Route::get('/binary-match',[MatchingController::class,'matching']);
+
+

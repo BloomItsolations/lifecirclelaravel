@@ -74,6 +74,7 @@
                                             <th>Package Name</th>
                                             <th>Package Amount</th>
                                             <th>Pin Number</th>
+                                            <th>Placement Side</th>
                                             <th>Status</th>
                                             <th>Created Date</th>
                                             <th>Action</th>
@@ -87,6 +88,13 @@
                                             <td> {{$pin->package->name}} Package</td>
                                             <td> {{$pin->package_amount}} </td>
                                             <td> {{$pin->pin_number}} </td>
+                                            <td> 
+                                                @if($pin->user)
+                                                {{$pin->side}}
+                                                @else
+                                                <input data-id="{{$pin['id']}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Left" data-off="Right" {{ $pin['side']=='left' ? 'checked' : '' }}>
+                                                @endif
+                                            </td>
                                             <td> {{$pin->used_status}} </td>
                                             <td> {{date('d-m-Y',strtotime($pin->created_at))}} </td>
                                             <td>
@@ -119,46 +127,22 @@
 @endsection
 @section('script')
 <script>
-	$(document).ready(function(){
-		$('#state_id').select2();
-		$('#pincode').change(function(){
-			var pincode=$('#pincode').val();
-
-			$.ajax({
-        url : "{{route('pincode')}}",
-        type: "POST",
-        data : {pincode: pincode, "_token": "{{ csrf_token() }}"},
-        success: function(data, textStatus, jqXHR)
-            {
-				if (data.status == true) {
-                    $('#state_id').html(data.state);
-                    $('#city_id').html(data.city);
-                    $('#district').val(data.district);
-                    $('#district').prop('readonly', true);
-                    $('#state_id').prop('readonly', true);
-                    $('#city_id').prop('readonly', true);
-                    $('#invalid_pincode').hide();
-                     $('#valid_pincode').html(data.message).show();
-                }
-                    else{
-                        $('#state_id').find('option').remove().end();
-                        $('#city_id').find('option').remove().end();
-						$('#district').val('');
-
-                        $('#valid_pincode').hide();
-                        $('#invalid_pincode').html(data.message).show();
-                    }
-
-            },
-        error: function (jqXHR, textStatus, errorThrown)
-            {
-
-            }
-        });
-		});
-	})
+    $(function() {
+              $('.toggle-class').change(function() {
+                  var status = $(this).prop('checked') == true ? 'left' : 'right';
+                  var pin_id = $(this).data('id');
+                //   alert(status);
+                // alert(pin_id);
+                  $.ajax({
+                      type: "GET",
+                      dataType: "json",
+                      url: '/user/pin-side-change',
+                      data: {'status': status, 'pin_id': pin_id},
+                      success: function(data){
+                        console.log(data.success)
+                      }
+                  });
+              })
+            })
 </script>
-
-
-
 @endsection
