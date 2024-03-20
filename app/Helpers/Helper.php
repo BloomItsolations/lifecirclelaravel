@@ -92,8 +92,11 @@ class Helper
                     $reward->child_id = $user->id;
                     $reward->description = $description;
                     $reward->amount = $level_reward;
+                    $reward->tds = $level_reward*(5/100);
+                    $reward->admin_charges = $level_reward*(10/100);
+                    $reward->credit = $level_reward-($reward->tds + $reward->admin_charges);
                     $reward->save();
-                    Helper::addToWallet($upline->id, $level_reward);
+                    Helper::addToWallet($upline->id, $reward->credit);
                 }
             } else {
                 echo 'No User Found';
@@ -198,7 +201,11 @@ class Helper
                 $reward = new Reward();
                 $reward->user_id = $user->id;
                 $reward->description = $description;
+                
                 $reward->amount = $amount;
+                $reward->tds = $amount*(5/100);
+                $reward->admin_charges = $amount*(10/100);
+                $reward->credit = $amount-($reward->tds + $reward->admin_charges);
                 $reward->save();
                 Helper::addToWallet($user->id, $amount);
             }
@@ -299,8 +306,11 @@ class Helper
             $reward->child_id = $user_id;
             $reward->description = $description;
             $reward->amount = $amount;
+            $reward->tds = $amount*(5/100);
+            $reward->admin_charges = $amount*(10/100);
+            $reward->credit = $amount-($reward->tds + $reward->admin_charges);
             $reward->save();
-            Helper::addToWallet($upline->id, $amount);
+            Helper::addToWallet($upline->id, $reward->credit);
         }
     }
     public static function addLevelIncome($user_id, $amount)
@@ -325,8 +335,11 @@ class Helper
                     $reward->child_id = $user->id;
                     $reward->description = $description;
                     $reward->amount = $level_reward;
+                    $reward->tds = $level_reward*(5/100);
+                    $reward->admin_charges = $level_reward*(10/100);
+                    $reward->credit = $level_reward-($reward->tds + $reward->admin_charges);
                     $reward->save();
-                    Helper::addToWallet($parent->id, $level_reward);
+                    Helper::addToWallet($parent->id, $reward->credit);
                 }
                 $parent_id = $parent->placement_id;
             }

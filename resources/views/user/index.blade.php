@@ -281,8 +281,8 @@
 											@endif
 									</div>
 
-                            <button type="submit" class="btn btn-primary btn-sm pull-right"> View All Rewards
-                            </button>
+                            <a href="{{route('fundTransaction')}}"><button type="submit" class="btn btn-primary btn-sm pull-right"> View All Rewards
+                            </button></a>
 
                         </div>
                     </div>

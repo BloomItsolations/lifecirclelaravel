@@ -28,6 +28,9 @@
 														<th> Sl no </th>
 														<th> Date  </th>
 														<th> Amount </th>
+														<th> TDS </th>
+														<th> Admin Charge </th>
+														<th> Credit </th>
 														<th> Type </th>
 														<th> Remark  </th>
 													</tr>
@@ -37,7 +40,7 @@
                                                     <tr>
 														<td> {{$loop->iteration}} </td>
 														<td> {{date('d-m-Y',strtotime($walletRequest->created_at))}} </td>
-														<td> {{$walletRequest->amount}} Rs </td>
+														<td> Rs {{$walletRequest->amount}}  </td>
 														<td> Debit </td>
 														<td> {{$walletRequest->Active}} </td>
 													</tr>
@@ -46,7 +49,10 @@
                                                     <tr>
 														<td> {{$loop->iteration}} </td>
 														<td> {{date('d-m-Y',strtotime($reward->created_at))}} </td>
-														<td> {{$reward->amount}} Rs </td>
+														<td> Rs {{$reward->amount}}  </td>
+														<td> Rs {{$reward->tds}}  </td>
+														<td> Rs {{$reward->admin_charges}}  </td>
+														<td> Rs {{$reward->credit}}  </td>
 														<td> {{$reward->description}} </td>
 														<td> - </td>
 													</tr>
