@@ -94,9 +94,10 @@ class Helper
                     $reward->amount = $level_reward;
                     $reward->tds = $level_reward*(5/100);
                     $reward->admin_charges = $level_reward*(10/100);
-                    $reward->credit = $level_reward-($reward->tds + $reward->admin_charges);
+                    $reward->repurchase_wallet = $level_reward*(10/100);
+                    $reward->credit = $level_reward-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
                     $reward->save();
-                    Helper::addToWallet($upline->id, $reward->credit);
+                    Helper::addToWallet($upline->id, $level_reward, $reward->repurchase_wallet);
                 }
             } else {
                 echo 'No User Found';
@@ -205,23 +206,26 @@ class Helper
                 $reward->amount = $amount;
                 $reward->tds = $amount*(5/100);
                 $reward->admin_charges = $amount*(10/100);
-                $reward->credit = $amount-($reward->tds + $reward->admin_charges);
+                $reward->repurchase_wallet = $amount*(10/100);
+                $reward->credit = $amount-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
                 $reward->save();
-                Helper::addToWallet($user->id, $amount);
+                Helper::addToWallet($user->id, $amount, $reward->repurchase_wallet);
             }
             // $this->addReward($sponser->sponser_id,$member_id);
         }
     }
-    public static function addToWallet($user_id, $amount)
+    public static function addToWallet($user_id, $amount, $repurchase_wallet)
     {
         $wallet = Wallet::where('user_id', $user_id)->first();
         if ($wallet) {
             $wallet->amount += $amount;
+            $wallet->repurchase_wallet += $repurchase_wallet;
             $wallet->save();
         } else {
             $wallet = new Wallet();
             $wallet->user_id = $user_id;
             $wallet->amount = $amount;
+            $wallet->repurchase_wallet = $repurchase_wallet;
             $wallet->status = "Active";
             $wallet->save();
         }
@@ -308,9 +312,10 @@ class Helper
             $reward->amount = $amount;
             $reward->tds = $amount*(5/100);
             $reward->admin_charges = $amount*(10/100);
-            $reward->credit = $amount-($reward->tds + $reward->admin_charges);
+            $reward->repurchase_wallet = $amount*(10/100);
+            $reward->credit = $amount-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
             $reward->save();
-            Helper::addToWallet($upline->id, $reward->credit);
+            Helper::addToWallet($upline->id, $amount, $reward->repurchase_wallet);
         }
     }
     public static function addLevelIncome($user_id, $amount)
@@ -337,9 +342,11 @@ class Helper
                     $reward->amount = $level_reward;
                     $reward->tds = $level_reward*(5/100);
                     $reward->admin_charges = $level_reward*(10/100);
-                    $reward->credit = $level_reward-($reward->tds + $reward->admin_charges);
+                    $reward->repurchase_wallet = $amount*(10/100);
+                    $reward->credit = $amount-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
                     $reward->save();
-                    Helper::addToWallet($parent->id, $reward->credit);
+                    Helper::addToWallet($parent->id, $amount, $reward->repurchase_wallet);
+                    
                 }
                 $parent_id = $parent->placement_id;
             }

@@ -41,15 +41,6 @@ use Illuminate\Support\Facades\Artisan;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-Route::get('/', [WelcomeController::class, 'index'])->name('home');
-
-Route::get('daily-benefits', function() {
-    Artisan::call('command:calculateDailyPackageBenefits');
-    return "Updated!";
-});
-
 Route::get('/storage-link', function () {
     Artisan::call('storage:link');
     echo ('link storage done');
@@ -64,11 +55,20 @@ Route::get('/optimize', function () {
     echo 'optimized';
 });
 
-Route::group(['namespace'=>'jobs', 'prefix' => 'jobs'], function () {
-	Route::get('create-rank', [RankManagementController::class,'index']);
-	Route::get('create-rewards', [RewardController::class,'index']);
-	Route::get('create-royalty-rewards', [RoyaltyRewardController::class,'index']);
-});
+
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
+
+// Route::get('daily-benefits', function() {
+//     Artisan::call('command:calculateDailyPackageBenefits');
+//     return "Updated!";
+// });
+
+
+// Route::group(['namespace'=>'jobs', 'prefix' => 'jobs'], function () {
+// 	Route::get('create-rank', [RankManagementController::class,'index']);
+// 	Route::get('create-rewards', [RewardController::class,'index']);
+// 	Route::get('create-royalty-rewards', [RoyaltyRewardController::class,'index']);
+// });
 // Route::get('about-us', [WelcomeController::class, 'about']);
 Route::get('faq', [WelcomeController::class, 'faq'])->name('faq');
 Route::get('privacy-policy', [WelcomeController::class, 'privacy'])->name('privacy');
@@ -229,13 +229,13 @@ Route::post('/search/product', [WelcomeController::class, 'searchproduct'])->nam
 
 Route::get('/cotactus',[ContactUsController::class,'index'])->name('contactus');
 Route::post('/user/contactus', [ContactUsController::class, 'store'])->name('user-contact');
-Route::get('/storage-link', function () {
-    Artisan::call('storage:link');
-    echo('link storage done');
-});
 
 Route::get('/package-list',[PackageController::class,'index']);
 
+
+
+
+// Calculation Controller
 Route::get('/binary-match',[MatchingController::class,'matching']);
 
 
