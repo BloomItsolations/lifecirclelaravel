@@ -62,7 +62,7 @@ class MatchingController extends Controller
                         $reward->repurchase_wallet = $binary_benefit*(10/100);
                         $reward->credit = $binary_benefit-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
                         $reward->save();
-                        Helper::addToWallet($um->user_id, $binary_benefit, $reward->repurchase_wallet);
+                        Helper::addToWallet($um->user_id, $reward->credit, $reward->repurchase_wallet);
                     }
                 }
             }

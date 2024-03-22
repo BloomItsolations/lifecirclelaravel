@@ -97,7 +97,7 @@ class Helper
                     $reward->repurchase_wallet = $level_reward*(10/100);
                     $reward->credit = $level_reward-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
                     $reward->save();
-                    Helper::addToWallet($upline->id, $level_reward, $reward->repurchase_wallet);
+                    Helper::addToWallet($upline->id, $reward->credit, $reward->repurchase_wallet);
                 }
             } else {
                 echo 'No User Found';
@@ -209,7 +209,7 @@ class Helper
                 $reward->repurchase_wallet = $amount*(10/100);
                 $reward->credit = $amount-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
                 $reward->save();
-                Helper::addToWallet($user->id, $amount, $reward->repurchase_wallet);
+                Helper::addToWallet($user->id, $reward->credit, $reward->repurchase_wallet);
             }
             // $this->addReward($sponser->sponser_id,$member_id);
         }
@@ -315,7 +315,7 @@ class Helper
             $reward->repurchase_wallet = $amount*(10/100);
             $reward->credit = $amount-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
             $reward->save();
-            Helper::addToWallet($upline->id, $amount, $reward->repurchase_wallet);
+            Helper::addToWallet($upline->id, $reward->credit, $reward->repurchase_wallet);
         }
     }
     public static function addLevelIncome($user_id, $amount)
@@ -345,7 +345,7 @@ class Helper
                     $reward->repurchase_wallet = $amount*(10/100);
                     $reward->credit = $amount-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
                     $reward->save();
-                    Helper::addToWallet($parent->id, $amount, $reward->repurchase_wallet);
+                    Helper::addToWallet($parent->id, $reward->credit, $reward->repurchase_wallet);
                     
                 }
                 $parent_id = $parent->placement_id;
