@@ -16,7 +16,7 @@ class MatchingController extends Controller
         $today=Carbon::now()
                     // ->subDays(1)
                     ->format('Y-m-d');
-        $unmatched=BinaryRewards::where('status', 'UnPaid')->whereDate('created_at',$today)->get();
+        $unmatched=BinaryRewards::where('status', 'UnPaid')->get();
         foreach ($unmatched as $um){
             $side='left';
             if($um->side=='left'){
@@ -40,7 +40,7 @@ class MatchingController extends Controller
                     'binary_pair_amount' => $binary_pair_amount,
                     'binary_benefit' => $binary_benefit,
                 ];
-
+                // dd($binary_array);
                 $inserted =BinaryBenefit::insert($binary_array);
                 if ($inserted) {
                     $um->status = 'Paid';
@@ -57,9 +57,12 @@ class MatchingController extends Controller
                         // $reward->child_id = $user->id;
                         $reward->description = $description;
                         $reward->amount = $binary_benefit;
-                        // dd($reward);
+                        $reward->tds = $binary_benefit*(5/100);
+                        $reward->admin_charges = $binary_benefit*(10/100);
+                        $reward->repurchase_wallet = $binary_benefit*(10/100);
+                        $reward->credit = $binary_benefit-($reward->tds + $reward->admin_charges + $reward->repurchase_wallet);
                         $reward->save();
-                        Helper::addToWallet($um->user_id, $binary_benefit);
+                        Helper::addToWallet($um->user_id, $reward->credit, $reward->repurchase_wallet);
                     }
                 }
             }

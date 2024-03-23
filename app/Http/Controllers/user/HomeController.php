@@ -206,7 +206,7 @@ class HomeController extends Controller
 
 
         Helper::addRefferalIncome($user->id, $direct_refferal_reward);
-        Helper::addLevelIncome($user->id, $package->package_amount);
+        // Helper::addLevelIncome($user->id, $package->package_amount);
     }
 
         public static function addToWallet($user_id,$amount){

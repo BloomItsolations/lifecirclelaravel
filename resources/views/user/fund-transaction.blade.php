@@ -49,10 +49,10 @@
                                                     <tr>
 														<td> {{$loop->iteration}} </td>
 														<td> {{date('d-m-Y',strtotime($reward->created_at))}} </td>
-														<td> Rs {{$reward->amount}}  </td>
+														<td class="text-danger"> Rs {{$reward->amount}}  </td>
 														<td> Rs {{$reward->tds}}  </td>
 														<td> Rs {{$reward->admin_charges}}  </td>
-														<td> Rs {{$reward->credit}}  </td>
+														<td style="color: green;"><b> Rs {{$reward->credit}}  </b></td>
 														<td> {{$reward->description}} </td>
 														<td> - </td>
 													</tr>

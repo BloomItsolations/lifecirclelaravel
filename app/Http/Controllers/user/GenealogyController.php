@@ -13,13 +13,16 @@ class GenealogyController extends Controller
 {
     public function genealogy(Request $request)
     {
+        // dd($request->all());
         if ($request->member_id) {
+            // dd($request->member_id);
             $user = User::where('member_id', $request->member_id)->first();
             // $tree = Tree::where('user_id', $user->id)->first();
         } else {
             $user = Auth::user();
             // $tree = Tree::where('user_id', $user->id)->first();
         }
+        // dd($user);
         if ($user) {
             $left = User::where('placement_id', $user->member_id)
                 ->where('side', 'left')

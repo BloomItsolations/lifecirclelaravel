@@ -42,7 +42,7 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <input class="account__login--input" placeholder="PIN Number" type="text" name="pin_number" required>
+                                    <input class="account__login--input" placeholder="PIN Number" type="text" name="pin_number" value="{{Request('p')}}" @if(Request('p')) readonly @endif required>
                                 </div>
                                 
                                 <div>
