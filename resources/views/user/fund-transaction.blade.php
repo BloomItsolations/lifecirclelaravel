@@ -30,6 +30,7 @@
 														<th> Amount </th>
 														<th> TDS </th>
 														<th> Admin Charge </th>
+														<th> Repurchase Wallet </th>
 														<th> Credit </th>
 														<th> Type </th>
 														<th> Remark  </th>
@@ -52,6 +53,7 @@
 														<td class="text-danger"> Rs {{$reward->amount}}  </td>
 														<td> Rs {{$reward->tds}}  </td>
 														<td> Rs {{$reward->admin_charges}}  </td>
+														<td> Rs {{$reward->repurchase_wallet}}  </td>
 														<td style="color: green;"><b> Rs {{$reward->credit}}  </b></td>
 														<td> {{$reward->description}} </td>
 														<td> - </td>
